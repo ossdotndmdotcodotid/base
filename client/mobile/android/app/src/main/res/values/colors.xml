@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ndm_ink">#FF15171D</color>
+    <color name="ndm_ink_deep">#FF0C0E12</color>
+    <color name="ndm_bone">#FFF7F5F1</color>
+    <color name="ndm_lime">#FF8AB239</color>
+</resources>
