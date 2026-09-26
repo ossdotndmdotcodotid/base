@@ -1,8 +1,5 @@
 #!/bin/sh
 
-
-
-
 app_path=$0
 
 while
@@ -44,8 +41,6 @@ case "$( uname )" in
   NONSTOP* )        nonstop=true ;;
 esac
 
-
-
 if [ -n "$JAVA_HOME" ] ; then
     if [ -x "$JAVA_HOME/jre/sh/java" ] ; then
         JAVACMD=$JAVA_HOME/jre/sh/java
@@ -83,7 +78,6 @@ if ! "$cygwin" && ! "$darwin" && ! "$nonstop" ; then
     esac
 fi
 
-
 if "$cygwin" || "$msys" ; then
     APP_HOME=$( cygpath --path --mixed "$APP_HOME" )
 
@@ -105,9 +99,7 @@ if "$cygwin" || "$msys" ; then
     done
 fi
 
-
 DEFAULT_JVM_OPTS='"-Xmx64m" "-Xms64m"'
-
 
 set -- \
         "-Dorg.gradle.appname=$APP_BASE_NAME" \
@@ -118,7 +110,6 @@ if ! command -v xargs >/dev/null 2>&1
 then
     die "xargs is not available"
 fi
-
 
 eval "set -- $(
         printf '%s\n' "$DEFAULT_JVM_OPTS $JAVA_OPTS $GRADLE_OPTS" |
