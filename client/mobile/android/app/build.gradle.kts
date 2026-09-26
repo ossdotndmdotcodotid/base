@@ -8,6 +8,10 @@ repositories {
     mavenCentral()
 }
 
+kotlin {
+    jvmToolchain(libs.versions.jdkToolchain.get().toInt())
+}
+
 android {
     namespace = "id.co.ndm.base.android"
     compileSdk = 37
@@ -24,6 +28,11 @@ android {
         compose = true
     }
 
+    compileOptions {
+        sourceCompatibility = JavaVersion.toVersion(libs.versions.javaSourceTarget.get())
+        targetCompatibility = JavaVersion.toVersion(libs.versions.javaSourceTarget.get())
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = true
@@ -34,7 +43,6 @@ android {
 }
 
 dependencies {
-    implementation(platform(libs.compose.bom))
     implementation(libs.compose.ui)
     implementation(libs.compose.foundation)
     implementation(libs.compose.material3)
