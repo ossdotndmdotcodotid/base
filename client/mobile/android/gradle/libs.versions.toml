@@ -5,14 +5,37 @@ composeUi = "1.12.1"
 composeFoundation = "1.12.1"
 composeMaterial3 = "1.4.0"
 activityCompose = "1.13.0"
-javaSourceTarget = "11"
-jdkToolchain = "25"
+coroutines = "1.11.0"
+lifecycle = "2.11.0"
+core = "1.19.1"
+annotation = "1.11.0"
+collection = "1.6.0"
+savedstate = "1.5.0"
+navigationevent = "1.1.2"
+profileinstaller = "1.4.1"
+emoji2 = "1.7.0"
+tracing = "2.0.3"
+window = "1.5.1"
+graphicsPath = "1.1.0"
 
 [libraries]
 compose-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "composeUi" }
 compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "composeFoundation" }
 compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "composeMaterial3" }
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
+coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
+lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime", version.ref = "lifecycle" }
+core = { group = "androidx.core", name = "core", version.ref = "core" }
+annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }
+collection = { group = "androidx.collection", name = "collection", version.ref = "collection" }
+savedstate = { group = "androidx.savedstate", name = "savedstate", version.ref = "savedstate" }
+navigationevent = { group = "androidx.navigationevent", name = "navigationevent", version.ref = "navigationevent" }
+profileinstaller = { group = "androidx.profileinstaller", name = "profileinstaller", version.ref = "profileinstaller" }
+emoji2 = { group = "androidx.emoji2", name = "emoji2", version.ref = "emoji2" }
+tracing = { group = "androidx.tracing", name = "tracing", version.ref = "tracing" }
+window = { group = "androidx.window", name = "window", version.ref = "window" }
+graphics-path = { group = "androidx.graphics", name = "graphics-path", version.ref = "graphicsPath" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

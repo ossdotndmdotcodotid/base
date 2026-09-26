@@ -8,8 +8,12 @@ repositories {
     mavenCentral()
 }
 
+dependencyLocking {
+    lockAllConfigurations()
+}
+
 kotlin {
-    jvmToolchain(libs.versions.jdkToolchain.get().toInt())
+    jvmToolchain(providers.gradleProperty("ndm.jdkToolchain").get().toInt())
 }
 
 android {
@@ -29,8 +33,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.toVersion(libs.versions.javaSourceTarget.get())
-        targetCompatibility = JavaVersion.toVersion(libs.versions.javaSourceTarget.get())
+        sourceCompatibility = JavaVersion.toVersion(providers.gradleProperty("ndm.javaSourceTarget").get())
+        targetCompatibility = JavaVersion.toVersion(providers.gradleProperty("ndm.javaSourceTarget").get())
     }
 
     buildTypes {
@@ -47,4 +51,20 @@ dependencies {
     implementation(libs.compose.foundation)
     implementation(libs.compose.material3)
     implementation(libs.activity.compose)
+
+    constraints {
+        implementation(libs.coroutines.core)
+        implementation(libs.coroutines.android)
+        implementation(libs.lifecycle.runtime)
+        implementation(libs.core)
+        implementation(libs.annotation)
+        implementation(libs.collection)
+        implementation(libs.savedstate)
+        implementation(libs.navigationevent)
+        implementation(libs.profileinstaller)
+        implementation(libs.emoji2)
+        implementation(libs.tracing)
+        implementation(libs.window)
+        implementation(libs.graphics.path)
+    }
 }
