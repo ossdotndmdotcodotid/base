@@ -57,6 +57,7 @@ private const val DragToDegrees = 0.4f
 fun LogoMark(
     modifier: Modifier = Modifier,
     diameter: Dp = 168.dp,
+    showArc: Boolean = true,
     interactive: Boolean = true
 ) {
     val interaction = remember { MutableInteractionSource() }
@@ -131,6 +132,7 @@ fun LogoMark(
                 val strokeWidth = 2.dp.toPx()
                 val stroke = Stroke(width = strokeWidth, cap = StrokeCap.Round)
                 onDrawBehind {
+                    if (!showArc) return@onDrawBehind
                     val radius = size.minDimension / 2f - strokeWidth
                     rotate(degrees = sweep + spin + decay.value) {
                         drawArc(
