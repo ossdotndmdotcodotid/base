@@ -22,13 +22,13 @@ android {
 
     buildFeatures {
         compose = true
-        buildConfig = true
     }
 
     buildTypes {
         release {
             isMinifyEnabled = true
             isShrinkResources = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"))
         }
     }
 }

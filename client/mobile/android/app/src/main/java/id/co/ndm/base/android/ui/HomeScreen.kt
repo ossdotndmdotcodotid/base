@@ -1,5 +1,7 @@
 package id.co.ndm.base.android.ui
 
+import android.content.pm.PackageManager
+import android.os.Build
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
@@ -26,9 +28,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import id.co.ndm.base.android.BuildConfig
 import id.co.ndm.base.android.ui.theme.AmoledBlack
 import id.co.ndm.base.android.ui.theme.Bone
 import id.co.ndm.base.android.ui.theme.MicroStyle
@@ -36,9 +38,27 @@ import id.co.ndm.base.android.ui.theme.MicroStyle
 private fun phase(value: Float, start: Float, end: Float): Float =
     ((value - start) / (end - start)).coerceIn(0f, 1f)
 
+@Suppress("DEPRECATION")
+@Composable
+private fun rememberVersionName(): String {
+    val context = LocalContext.current
+    return remember(context) {
+        runCatching {
+            val manager = context.packageManager
+            val info = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                manager.getPackageInfo(context.packageName, PackageManager.PackageInfoFlags.of(0L))
+            } else {
+                manager.getPackageInfo(context.packageName, 0)
+            }
+            info.versionName
+        }.getOrNull().orEmpty()
+    }
+}
+
 @Composable
 fun HomeScreen() {
     val reveal = remember { Animatable(0f) }
+    val versionName = rememberVersionName()
 
     LaunchedEffect(Unit) {
         reveal.animateTo(1f, tween(durationMillis = 980, easing = FastOutSlowInEasing))
@@ -98,7 +118,7 @@ fun HomeScreen() {
                 Spacer(modifier = Modifier.height(18.dp))
 
                 Text(
-                    text = "V" + BuildConfig.VERSION_NAME,
+                    text = "V" + versionName,
                     style = MicroStyle,
                     color = Bone,
                     textAlign = TextAlign.Center,
