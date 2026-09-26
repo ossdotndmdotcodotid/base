@@ -118,7 +118,7 @@ fun HomeScreen() {
                 Spacer(modifier = Modifier.height(18.dp))
 
                 Text(
-                    text = "V" + versionName,
+                    text = "V$versionName",
                     style = MicroStyle,
                     color = Bone,
                     textAlign = TextAlign.Center,
