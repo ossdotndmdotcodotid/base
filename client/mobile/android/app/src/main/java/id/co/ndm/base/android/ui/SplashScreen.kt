@@ -42,7 +42,7 @@ fun SplashScreen() {
             verticalArrangement = Arrangement.Center
         ) {
             LogoMark(
-                diameter = 108.dp,
+                diameter = 152.dp,
                 interactive = false,
                 modifier = Modifier.graphicsLayer {
                     val p = reveal.value
@@ -53,7 +53,7 @@ fun SplashScreen() {
                 }
             )
 
-            Spacer(modifier = Modifier.height(44.dp))
+            Spacer(modifier = Modifier.height(48.dp))
 
             CircularProgressIndicator(
                 modifier = Modifier
