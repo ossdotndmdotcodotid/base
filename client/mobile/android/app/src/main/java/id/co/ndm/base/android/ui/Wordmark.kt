@@ -11,7 +11,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,13 +19,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import id.co.ndm.base.android.R
 import id.co.ndm.base.android.ui.theme.Bone
@@ -71,19 +72,20 @@ fun Wordmark(
 
     Column(
         modifier = modifier
-            .fillMaxWidth()
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null
             ) { taps++ }
             .graphicsLayer {
                 translationY = drift * 1.5.dp.toPx()
-            }
+            },
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
             text = prefix,
             style = PrefixStyle,
             color = Lime,
+            textAlign = TextAlign.Center,
             modifier = Modifier.graphicsLayer {
                 val p = window(reveal(), 0f, 0.45f)
                 alpha = p
@@ -95,8 +97,7 @@ fun Wordmark(
             text = core,
             style = WordmarkStyle,
             color = Bone,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
+            textAlign = TextAlign.Center,
             modifier = Modifier
                 .graphicsLayer {
                     val p = window(reveal(), 0.28f, 1f)
@@ -106,9 +107,10 @@ fun Wordmark(
                 .drawBehind {
                     val width = size.width * underline.value
                     if (width <= 0f) return@drawBehind
+                    val left = if (layoutDirection == LayoutDirection.Rtl) size.width - width else 0f
                     drawRect(
                         color = Lime,
-                        topLeft = Offset(0f, size.height + 7.dp.toPx()),
+                        topLeft = Offset(left, size.height + 7.dp.toPx()),
                         size = Size(width, 2.dp.toPx())
                     )
                 }

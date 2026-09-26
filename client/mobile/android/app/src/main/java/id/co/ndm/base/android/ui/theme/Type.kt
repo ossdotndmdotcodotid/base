@@ -9,22 +9,22 @@ val WordmarkStyle = TextStyle(
     fontFamily = FontFamily.SansSerif,
     fontWeight = FontWeight.W900,
     fontSize = 40.sp,
-    lineHeight = 42.sp,
+    lineHeight = 44.sp,
     letterSpacing = (-1.5).sp
 )
 
 val PrefixStyle = TextStyle(
     fontFamily = FontFamily.SansSerif,
     fontWeight = FontWeight.W700,
-    fontSize = 12.sp,
-    lineHeight = 14.sp,
+    fontSize = 13.sp,
+    lineHeight = 15.sp,
     letterSpacing = 4.sp
 )
 
 val MicroStyle = TextStyle(
     fontFamily = FontFamily.Monospace,
-    fontWeight = FontWeight.Normal,
-    fontSize = 10.sp,
-    lineHeight = 12.sp,
-    letterSpacing = 1.8.sp
+    fontWeight = FontWeight.Medium,
+    fontSize = 12.sp,
+    lineHeight = 16.sp,
+    letterSpacing = 2.2.sp
 )

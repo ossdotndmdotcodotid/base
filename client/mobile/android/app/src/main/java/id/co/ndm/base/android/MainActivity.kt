@@ -6,7 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import id.co.ndm.base.android.ui.BrandScreen
+import id.co.ndm.base.android.ui.NdmApp
 import id.co.ndm.base.android.ui.theme.NdmTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,7 +19,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             NdmTheme {
-                BrandScreen()
+                NdmApp()
             }
         }
     }

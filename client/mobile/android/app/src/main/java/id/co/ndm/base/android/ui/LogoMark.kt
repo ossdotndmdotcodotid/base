@@ -14,7 +14,9 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.detectHorizontalDragGestures
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.draggable
+import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Box
@@ -36,7 +38,6 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
@@ -47,22 +48,25 @@ import id.co.ndm.base.android.ui.theme.Lime
 import kotlinx.coroutines.launch
 
 private const val ArcSweepDegrees = 52f
+private const val ArcMinAlpha = 0.58f
+private const val ArcAlphaRange = 0.37f
 private const val IdleSweepMillis = 18000
 private const val DragToDegrees = 0.4f
 
 @Composable
 fun LogoMark(
     modifier: Modifier = Modifier,
-    diameter: Dp = 168.dp
+    diameter: Dp = 168.dp,
+    interactive: Boolean = true
 ) {
     val interaction = remember { MutableInteractionSource() }
     val pressed by interaction.collectIsPressedAsState()
-    val spin = remember { Animatable(0f) }
+    var spin by remember { mutableFloatStateOf(0f) }
+    val decay = remember { Animatable(0f) }
     val scope = rememberCoroutineScope()
-    var flingVelocity by remember { mutableFloatStateOf(0f) }
 
     val pressScale by animateFloatAsState(
-        targetValue = if (pressed) 0.94f else 1f,
+        targetValue = if (interactive && pressed) 0.94f else 1f,
         animationSpec = spring(dampingRatio = 0.55f, stiffness = 380f),
         label = "pressScale"
     )
@@ -87,6 +91,33 @@ fun LogoMark(
         label = "sweep"
     )
 
+    val gestures = if (interactive) {
+        Modifier
+            .draggable(
+                state = rememberDraggableState { delta ->
+                    spin += delta * DragToDegrees
+                },
+                orientation = Orientation.Horizontal,
+                onDragStopped = { velocity ->
+                    scope.launch {
+                        decay.snapTo(0f)
+                        decay.animateDecay(
+                            initialVelocity = velocity * DragToDegrees,
+                            animationSpec = exponentialDecay(frictionMultiplier = 0.9f)
+                        )
+                        spin += decay.value
+                        decay.snapTo(0f)
+                    }
+                }
+            )
+            .clickable(
+                interactionSource = interaction,
+                indication = null
+            ) { }
+    } else {
+        Modifier
+    }
+
     Box(
         modifier = modifier
             .size(diameter)
@@ -95,35 +126,15 @@ fun LogoMark(
                 scaleX = s
                 scaleY = s
             }
-            .pointerInput(Unit) {
-                detectHorizontalDragGestures(
-                    onHorizontalDrag = { change, dragAmount ->
-                        change.consume()
-                        flingVelocity = dragAmount * DragToDegrees
-                        scope.launch { spin.snapTo(spin.value + dragAmount * DragToDegrees) }
-                    },
-                    onDragEnd = {
-                        scope.launch {
-                            spin.animateDecay(
-                                initialVelocity = flingVelocity * 22f,
-                                animationSpec = exponentialDecay(frictionMultiplier = 0.82f)
-                            )
-                        }
-                    }
-                )
-            }
-            .clickable(
-                interactionSource = interaction,
-                indication = null
-            ) { }
+            .then(gestures)
             .drawWithCache {
                 val strokeWidth = 2.dp.toPx()
                 val stroke = Stroke(width = strokeWidth, cap = StrokeCap.Round)
                 onDrawBehind {
                     val radius = size.minDimension / 2f - strokeWidth
-                    rotate(degrees = sweep + spin.value) {
+                    rotate(degrees = sweep + spin + decay.value) {
                         drawArc(
-                            color = Lime.copy(alpha = 0.45f + 0.45f * breathe),
+                            color = Lime.copy(alpha = ArcMinAlpha + ArcAlphaRange * breathe),
                             startAngle = -90f,
                             sweepAngle = ArcSweepDegrees,
                             useCenter = false,
