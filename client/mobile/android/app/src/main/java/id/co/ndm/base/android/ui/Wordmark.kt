@@ -34,6 +34,7 @@ import id.co.ndm.base.android.ui.theme.Bone
 import id.co.ndm.base.android.ui.theme.Lime
 import id.co.ndm.base.android.ui.theme.PrefixStyle
 import id.co.ndm.base.android.ui.theme.WordmarkStyle
+import kotlin.time.Duration.Companion.milliseconds
 import kotlinx.coroutines.delay
 
 private fun window(value: Float, start: Float, end: Float): Float =
@@ -66,7 +67,7 @@ fun Wordmark(
     LaunchedEffect(taps) {
         if (taps == 0) return@LaunchedEffect
         underline.animateTo(1f, tween(durationMillis = 420, easing = FastOutSlowInEasing))
-        delay(900)
+        delay(900.milliseconds)
         underline.animateTo(0f, tween(durationMillis = 320, easing = FastOutSlowInEasing))
     }
 

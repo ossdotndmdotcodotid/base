@@ -12,9 +12,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import kotlin.time.Duration.Companion.milliseconds
 import kotlinx.coroutines.delay
 
-private const val SplashHoldMillis = 1400L
+private val SplashHold = 1400.milliseconds
 private const val FadeOutMillis = 300
 private const val FadeInMillis = 380
 private const val FadeSequenceGapMillis = 300
@@ -25,7 +26,7 @@ fun NdmApp() {
 
     LaunchedEffect(Unit) {
         if (showSplash) {
-            delay(SplashHoldMillis)
+            delay(SplashHold)
             showSplash = false
         }
     }

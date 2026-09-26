@@ -3,6 +3,11 @@ plugins {
     alias(libs.plugins.compose.compiler)
 }
 
+repositories {
+    google()
+    mavenCentral()
+}
+
 android {
     namespace = "id.co.ndm.base.android"
     compileSdk = 37
@@ -18,6 +23,13 @@ android {
     buildFeatures {
         compose = true
         buildConfig = true
+    }
+
+    buildTypes {
+        release {
+            isMinifyEnabled = true
+            isShrinkResources = true
+        }
     }
 }
 
