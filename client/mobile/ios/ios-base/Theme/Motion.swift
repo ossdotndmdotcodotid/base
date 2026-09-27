@@ -10,6 +10,7 @@ enum Motion {
     static let breatheSeconds: Double = 3.2
     static let breatheScaleGain: CGFloat = 0.012
     static let pressScale: CGFloat = 0.94
+    static let dragActivationDistance: CGFloat = 10
     static let dragDegreesPerPoint: Double = 0.4
     static let flingSeconds: Double = 1.1
     static let flingRetention: Double = 0.5

@@ -14,7 +14,7 @@ struct TypeBlock: View {
     private var eyebrowSize: CGFloat { Typography.eyebrowBaseSize * eyebrowScale }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
+        VStack(spacing: 0) {
             Text("PT")
                 .font(Typography.eyebrowFont(size: eyebrowSize, legibility: legibility))
                 .tracking(Typography.eyebrowBaseTracking * eyebrowScale)
@@ -25,10 +25,11 @@ struct TypeBlock: View {
             displayBlock
                 .padding(.top, eyebrowShift)
         }
+        .frame(maxWidth: .infinity)
     }
 
     private var displayBlock: some View {
-        VStack(alignment: .leading, spacing: Typography.displayLineShift(scaledSize: displaySize)) {
+        VStack(spacing: Typography.displayLineShift(scaledSize: displaySize)) {
             Text("Next Day")
                 .font(Typography.displayFont(size: displaySize))
                 .tracking(Typography.displayBaseTracking * displayScale)
@@ -37,6 +38,7 @@ struct TypeBlock: View {
                 .tracking(Typography.displayBaseTracking * displayScale)
         }
         .foregroundStyle(Palette.bone)
+        .multilineTextAlignment(.center)
         .lineLimit(1)
         .minimumScaleFactor(0.85)
         .dynamicTypeSize(.large ... .xxxLarge)

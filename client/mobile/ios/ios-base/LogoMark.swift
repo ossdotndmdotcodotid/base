@@ -51,7 +51,7 @@ struct LogoMark: View {
     }
 
     private var drag: some Gesture {
-        DragGesture(minimumDistance: 0)
+        DragGesture(minimumDistance: Motion.dragActivationDistance)
             .onChanged { value in
                 if !pressed {
                     pressed = true
